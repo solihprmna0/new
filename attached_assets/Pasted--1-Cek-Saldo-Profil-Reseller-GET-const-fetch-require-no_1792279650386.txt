@@ -1,0 +1,892 @@
+// 1. Cek Saldo & Profil Reseller (GET)
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/user/balance', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json'
+  }
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+###respon
+{
+  "status": true,
+  "code": 200,
+  "message": "Data profil reseller berhasil diambil.",
+  "data": {
+    "username": "lockedprofile",
+    "email": "lockedp91@gmail.com",
+    "balance": 20000,
+    "api_trx_count": 13,
+    "monthly_stats": {
+      "period": "2026-10",
+      "daily_order_count": 0,
+      "daily_renew_count": 0,
+      "weekly_order_count": 0,
+      "weekly_renew_count": 0,
+      "monthly_order_count": 4,
+      "monthly_renew_count": 0,
+      "fee_daily": 0,
+      "fee_weekly": 0,
+      "fee_monthly": 800,
+      "fee_total": 800
+    }
+  }
+}
+
+
+// 2. Ambil Katalog Server (GET)
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/servers', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json'
+  }
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+###respon
+{
+  "status": true,
+  "code": 200,
+  "message": "Daftar server berhasil diambil.",
+  "data": {
+    "total_servers": 14,
+    "servers": [
+      {
+        "server_id": "01a13d19-6765-73a8-9a00-f0c325ccacf4",
+        "name": "CLOUDFRONT FREE/GRATIS",
+        "location": "ID",
+        "domain": "geratis.nadiavpnku.my.id",
+        "domain_cloudfront": "d318hdausjayqs.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": false,
+        "trial_duration": null,
+        "renew_enabled": false,
+        "migration_enabled": false,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 0,
+          "per_week": 0,
+          "per_month": 0
+        },
+        "capacity": {
+          "limit": "Unlimited",
+          "used": 861,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "019d9a8a-41e9-727d-b5e7-1ea594fc04d1",
+        "name": "PT.Sepadan Abadi",
+        "location": "ID",
+        "domain": "ikd.vpnstore28.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 150,
+          "used": 150,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "019ecafe-9826-7339-8939-8c6c03daaac5",
+        "name": "CLOUDMATIKA",
+        "location": "ID",
+        "domain": "sg.vpnstore28.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 150,
+          "used": 123,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "019d416c-91ab-70cf-ae93-98251456366e",
+        "name": "SGCLOUDHOST",
+        "location": "SG",
+        "domain": "singapura.vpnstore28.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 150,
+          "used": 123,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "01a03c0a-b07a-736c-a192-a3be583503ae",
+        "name": "PT.RAJASA",
+        "location": "ID",
+        "domain": "idvp.nadiastore.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 100,
+          "used": 95,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "01a05b60-b5c7-71d3-a762-c6400b439b09",
+        "name": "PT.RSA ABADI",
+        "location": "ID",
+        "domain": "idvip.nadiavpnstore.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": true,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 50,
+          "used": 45,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "019d3fd8-5c1e-734d-806e-72feec9973c5",
+        "name": "CLOUD-MTK",
+        "location": "ID",
+        "domain": "nusa.vpnstore28.my.id",
+        "domain_cloudfront": null,
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 150,
+          "used": 114,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "019d4b9f-7fb5-7369-8f4b-8974abd0123c",
+        "name": "RAJAMITRA",
+        "location": "ID",
+        "domain": "id.vpnstore28.my.id",
+        "domain_cloudfront": "djg76l2dbzqkn.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "day",
+          "week",
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 280,
+          "used": 280,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "019d3fda-3731-730b-89ad-8f171134fb93",
+        "name": "BIZNET",
+        "location": "ID",
+        "domain": "biznet.vpnstore28.my.id",
+        "domain_cloudfront": "d11dymj6ul901r.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 2000,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 8000
+        },
+        "capacity": {
+          "limit": 250,
+          "used": 250,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "019f173b-1a41-733e-b271-633d74e7edf3",
+        "name": "NUSA ID",
+        "location": "ID",
+        "domain": "vpnvip.nadia-lestari.my.id",
+        "domain_cloudfront": "d1s160zte20y2r.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "60 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 2000,
+        "pricing": {
+          "per_day": 428,
+          "per_week": 3000,
+          "per_month": 8000
+        },
+        "capacity": {
+          "limit": 100,
+          "used": 100,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "01a11353-0afc-7193-8c02-08d3de1a50b8",
+        "name": "CLOUDFRONT LITE",
+        "location": "ID",
+        "domain": "order.vpn-nadiastore.my.id",
+        "domain_cloudfront": "djg76l2dbzqkn.cloudfront.net",
+        "is_active": true,
+        "is_virtual": true,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 0,
+        "pricing": {
+          "per_day": 6000,
+          "per_week": 6000,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 401,
+          "used": 401,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "01a133f2-e422-73e9-bc1d-3d3621d704c6",
+        "name": "CLOUDFRONT LITE PRO",
+        "location": "ID",
+        "domain": "didmbpje6g7pc.cloudfront.net",
+        "domain_cloudfront": "didmbpje6g7pc.cloudfront.net",
+        "is_active": true,
+        "is_virtual": true,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 2000,
+        "pricing": {
+          "per_day": 6000,
+          "per_week": 6000,
+          "per_month": 6000
+        },
+        "capacity": {
+          "limit": 400,
+          "used": 264,
+          "is_full": false
+        }
+      },
+      {
+        "server_id": "01a06443-8a9c-7254-b6f5-d59e4cfc3edd",
+        "name": "CLOUDFRONT  REGULER",
+        "location": "ID",
+        "domain": "biznet.vpnstore28.my.id",
+        "domain_cloudfront": "d11dymj6ul901r.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "30 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 2000,
+        "pricing": {
+          "per_day": 267,
+          "per_week": 1869,
+          "per_month": 7500
+        },
+        "capacity": {
+          "limit": 170,
+          "used": 170,
+          "is_full": true
+        }
+      },
+      {
+        "server_id": "019e15b0-f043-7170-a5c7-63719b4b8d45",
+        "name": "CLOUDFRONT PREMIUM",
+        "location": "ID",
+        "domain": "vpnvip.nadia-lestari.my.id",
+        "domain_cloudfront": "d1s160zte20y2r.cloudfront.net",
+        "is_active": true,
+        "is_virtual": false,
+        "supported_protocols": [
+          "ssh",
+          "vmess",
+          "vless",
+          "trojan"
+        ],
+        "supported_types": [
+          "month"
+        ],
+        "trial_enabled": true,
+        "trial_duration": "60 menit",
+        "renew_enabled": true,
+        "migration_enabled": true,
+        "migration_price": 2000,
+        "pricing": {
+          "per_day": 1000,
+          "per_week": 4000,
+          "per_month": 8000
+        },
+        "capacity": {
+          "limit": 365,
+          "used": 365,
+          "is_full": true
+        }
+      }
+    ]
+  }
+}
+
+
+//////POST /api/v1/vpn/trial
+
+#vmess
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/trial', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "vmess"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#vless
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/trial', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "vless"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#trojan
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/trial', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "trojan"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#ssh
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/trial', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "ssh"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+####respon
+{
+  "status": true,
+  "code": 201,
+  "message": "Akun Trial berhasil dibuat. Masa aktif 30 menit.",
+  "data": {
+    "account_id": "uuid-akun",
+    "username": "trialxxxxx",
+    "protocol": "VLESS",
+    "uuid": "uuid-config",
+    "trial_duration": "30 menit",
+    "expire_at": "2026-05-27 15:30:00",
+    "config": { ... }
+  }
+}
+
+/////ORDER VPN
+#Vmess
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/order', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "vmess",
+  "type": "month",
+  "duration": 1,
+  "username": "uservpn"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#vlesss
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/order', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "vless",
+  "type": "month",
+  "duration": 1,
+  "username": "uservpn"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#trojan
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/order', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "trojan",
+  "type": "month",
+  "duration": 1,
+  "username": "uservpn"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+#ssh
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/order', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "server_id": "SERVER_UUID",
+  "protocol": "ssh",
+  "type": "month",
+  "duration": 1,
+  "username": "uservpn",
+  "password": "pass123"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+###respon
+{
+  "status": true,
+  "message": "Berhasil Membuat Layanan VPN.",
+  "data": {
+    "account_id": "01a14c2a-e5e4-73e9-947f-7cc8908dc286",
+    "username": "ujshshs",
+    "protocol": "VMESS",
+    "uuid": "3e0653ac-f0af-4d4d-a9d1-17edbbecfcab",
+    "expire_at": "2026-11-17 06:20:37",
+    "config": {
+      "hostname": "didmbpje6g7pc.cloudfront.net",
+      "ISP": "PT Atria Teknologi Indonesia",
+      "CITY": "Jakarta",
+      "username": "ujshshs",
+      "expired": "2026-11-17",
+      "uuid": "3e0653ac-f0af-4d4d-a9d1-17edbbecfcab",
+      "time": "30 Days",
+      "port": {
+        "tls": "443, 8443",
+        "none": "80, 8080",
+        "any": "2052, 2053, 8880"
+      },
+      "path": {
+        "stn": "/vmess",
+        "multi": "/yourbug",
+        "grpc": "vmess",
+        "up": "/upvmess"
+      },
+      "link": {
+        "tls": "vmess://eyJ2IjoiMiIsInBzIjoidWpzaHNocyIsImFkZCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJwb3J0IjoiNDQzIiwiaWQiOiIzZTA2NTNhYy1mMGFmLTRkNGQtYTlkMS0xN2VkYmJlY2ZjYWIiLCJhaWQiOiIwIiwibmV0Ijoid3MiLCJwYXRoIjoiXC92bWVzcyIsInR5cGUiOiJub25lIiwiaG9zdCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJzbmkiOiJkaWRtYnBqZTZnN3BjLmNsb3VkZnJvbnQubmV0IiwidGxzIjoidGxzIn0=",
+        "none": "vmess://eyJ2IjoiMiIsInBzIjoidWpzaHNocyIsImFkZCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJwb3J0IjoiODAiLCJpZCI6IjNlMDY1M2FjLWYwYWYtNGQ0ZC1hOWQxLTE3ZWRiYmVjZmNhYiIsImFpZCI6IjAiLCJuZXQiOiJ3cyIsInBhdGgiOiJcL3ZtZXNzIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiZGlkbWJwamU2ZzdwYy5jbG91ZGZyb250Lm5ldCIsInNuaSI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJ0bHMiOiJub25lIn0=",
+        "grpc": "vmess://eyJ2IjoiMiIsInBzIjoidWpzaHNocyIsImFkZCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJwb3J0IjoiNDQzIiwiaWQiOiIzZTA2NTNhYy1mMGFmLTRkNGQtYTlkMS0xN2VkYmJlY2ZjYWIiLCJhaWQiOiIwIiwibmV0IjoiZ3JwYyIsInBhdGgiOiJ2bWVzcyIsInR5cGUiOiJub25lIiwiaG9zdCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJzbmkiOiJkaWRtYnBqZTZnN3BjLmNsb3VkZnJvbnQubmV0IiwidGxzIjoidGxzIn0=",
+        "uptls": "vmess://eyJ2IjoiMiIsInBzIjoidWpzaHNocyIsImFkZCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJwb3J0IjoiNDQzIiwiaWQiOiIzZTA2NTNhYy1mMGFmLTRkNGQtYTlkMS0xN2VkYmJlY2ZjYWIiLCJhaWQiOiIwIiwibmV0IjoiaHR0cHVwZ3JhZGUiLCJwYXRoIjoiXC91cHZtZXNzIiwidHlwZSI6Im5vbmUiLCJob3N0IjoiZGlkbWJwamU2ZzdwYy5jbG91ZGZyb250Lm5ldCIsInNuaSI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJ0bHMiOiJ0bHMifQ==",
+        "upntls": "vmess://eyJ2IjoiMiIsInBzIjoidWpzaHNocyIsImFkZCI6ImRpZG1icGplNmc3cGMuY2xvdWRmcm9udC5uZXQiLCJwb3J0IjoiODAiLCJpZCI6IjNlMDY1M2FjLWYwYWYtNGQ0ZC1hOWQxLTE3ZWRiYmVjZmNhYiIsImFpZCI6IjAiLCJuZXQiOiJodHRwdXBncmFkZSIsInBhdGgiOiJcL3Vwdm1lc3MiLCJ0eXBlIjoibm9uZSIsImhvc3QiOiJkaWRtYnBqZTZnN3BjLmNsb3VkZnJvbnQubmV0Iiwic25pIjoiZGlkbWJwamU2ZzdwYy5jbG91ZGZyb250Lm5ldCIsInRscyI6Im5vbmUifQ=="
+      }
+    },
+    "transaction": {
+      "price": 6000,
+      "balance_before": "20000.00",
+      "balance_after": 14000
+    }
+  }
+}
+////Endpoint Renew VPN
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/renew', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_YOUR_TOKEN',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "account_id": "ACCOUNT_UUID",
+  "type": "month",
+  "duration": 1
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+
+// 1. Tarik Semua Daftar Akun VPN (GET)
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/accounts', {
+  method: 'GET',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json'
+  }
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+// 2. Cek Detail Spesifik 1 Akun VPN (POST)
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/account/details', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "account_id": "ACCOUNT_UUID"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+////Endpoint Fix / Sync Akun (POST) Perbaiki Config Error / Hilang di VPS tanpa memotong saldo
+
+.const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/account/sync', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "account_id": "ACCOUNT_UUID"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+//////Endpoint Hapus Akun (DELETE) Hapus akun secara permanen dari server. Tindakan ini tidak bisa dibatalkan!
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/vpn/account/delete', {
+  method: 'DELETE',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json'
+  }
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+////kuota indosat
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/quota/check', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "provider": "xl",
+  "msisdn": "087812345678"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));
+
+///kuota im3
+
+const fetch = require('node-fetch');
+
+fetch('https://www.nadiavpn.web.id/api/v1/quota/check', {
+  method: 'POST',
+  headers: {
+    'Authorization': 'Bearer sk_live_t5ZkcPwMGtYXv3V4K5TyT5YHEpVLuhAFt9Pd3H4t',
+    'Accept': 'application/json',
+    'Content-Type': 'application/json'
+  },
+  body: JSON.stringify({
+  "provider": "indosat",
+  "msisdn": "081512345678"
+})
+})
+.then(res => res.json())
+.then(json => console.log(json));

@@ -1,0 +1,74 @@
+tanda "#" adalah pembatas nya ya, qiospay juga menyediakan plugin & sdk, sama library php
+
+#apikey & header const res = await fetch('https://my.qiospay.com/v1/me', { headers: { 'x-api-key': process.env.QIOSPAY_API_KEY }, }); console.log(await res.json());
+
+#pembuatan signature import crypto from 'node:crypto';
+
+const sign = (msg) => crypto .createHmac('sha256', process.env.QIOSPAY_PRIVATE_KEY) .update(msg) .digest('hex');
+
+const signature = sign('716554639659|INV-1001|25000|https://tokoanda.com/selesai');
+
+#request transaksi // Node.js 18+ (fetch bawaan) const res = await fetch('https://my.qiospay.com/v1/invoices', { method: 'POST', headers: { 'x-api-key': process.env.QIOSPAY_API_KEY, 'Content-Type': 'application/json', }, body: JSON.stringify({ order_id: 'INV-1001', amount: 150000, keterangan: 'Pembayaran Invoice #1001', redirect_url: 'https://tokoanda.com/selesai', metadata: { user_id: 42 }, }), }); const body = await res.json(); if (!res.ok) throw new Error(body.error?.message);
+
+const inv = body.data; console.log(inv.total_amount, inv.pay_url); // Express: res.redirect(inv.pay_url)
+
+#contoh respon request transaksi { "data": { "id": "3382463b-5c1e-4a8f-9d2b-7e0a1f6c9b11", "ref_id": "INV-1001", "status": "pending", "amount": 150000, "unique_code": 123, "total_amount": 150123, "description": "Pembayaran Invoice #1001", "mdr": 0, "net_amount": 0, "qris_content": "00020101021226650013ID.CO.QRIS.WWW…6304A1B2", "qr_image_url": "https://my.qiospay.com/api/public/invoices/3382463b-…/qr.png", "pay_url": "https://my.qiospay.com/pay/3382463b-…", "merchant_code": "716554639659", "merchant_name": "Toko Anda", "metadata": {"user_id": 42}, "expires_at": "2026-10-17T21:51:45+07:00", "created_at": "2026-10-17T20:51:45+07:00" } }
+
+#detail/cek status const res = await fetch('https://my.qiospay.com/v1/invoices/' + encodeURIComponent('INV-1001'), { headers: { 'x-api-key': process.env.QIOSPAY_API_KEY }, }); const { data: inv } = await res.json(); if (inv.status === 'paid') console.log('Lunas', inv.paid_at);
+
+#contoh respon (detail/cekstatus) { "data": { "id": "3382463b-5c1e-4a8f-9d2b-7e0a1f6c9b11", "ref_id": "INV-1001", "status": "paid", "amount": 150000, "unique_code": 123, "total_amount": 150123, "mdr": 0, "net_amount": 150000, "paid_at": "2026-10-17T20:52:08+07:00", "paid_by": "BUDI SANTOSO", "withdrawal_code": "", "merchant_code": "716554639659", "expires_at": "2026-10-17T21:51:45+07:00", "created_at": "2026-10-17T20:51:45+07:00" } }
+
+#daftar transaksi const q = new URLSearchParams({ page: 1, limit: 25, status: 'paid' }); const res = await fetch('https://my.qiospay.com/v1/invoices?' + q, { headers: { 'x-api-key': process.env.QIOSPAY_API_KEY }, }); const { data } = await res.json();
+
+#contoh respon daftar transaksi { "data": [ { "id": "3382463b-…", "ref_id": "INV-1001", "status": "paid", "total_amount": 150123, "paid_at": "2026-10-17T20:52:08+07:00" }, { "id": "9a1c22e0-…", "ref_id": "INV-1000", "status": "expired", "total_amount": 50217, "paid_at": null } ] }
+
+#batalkan transaksi await fetch('https://my.qiospay.com/v1/invoices/INV-1001/cancel', { method: 'POST', headers: { 'x-api-key': process.env.QIOSPAY_API_KEY }, });
+
+#contoh respon batalkan transaksi { "data": { "id": "3382463b-…", "ref_id": "INV-1001", "status": "cancelled", ... } }
+
+#contoh link redirect https://my.qiospay.com/bayar/716554639659?order_id=INV-1001&amount=25000&redirect_url=https%3A%2F%2Ftokoanda.com%2Fselesai&keterangan=Paket+Premium&signature=9f86d081884c7d659a2feaa0c55ad015a3bf4f1b2b0b822cd15d6c15b0f00a08
+
+#contoh kode link redirect import crypto from 'node:crypto';
+
+const KODE_TOKO = '716554639659'; const PRIVATE_KEY = process.env.QIOSPAY_PRIVATE_KEY;
+
+function qiospayLink({ orderId, amount, redirectUrl = '', keterangan = '' }) { const signature = crypto .createHmac('sha256', PRIVATE_KEY) .update(${KODE_TOKO}|${orderId}|${amount}|${redirectUrl}) .digest('hex'); const q = new URLSearchParams({ order_id: orderId, amount: String(amount) }); if (redirectUrl) q.set('redirect_url', redirectUrl); if (keterangan) q.set('keterangan', keterangan); q.set('signature', signature); return https://my.qiospay.com/bayar/${KODE_TOKO}?${q}; }
+
+// Express app.post('/checkout', (req, res) => { res.redirect(qiospayLink({ orderId: 'INV-1001', amount: 25000, redirectUrl: 'https://tokoanda.com/selesai', keterangan: 'Pembelian Paket Premium', })); });
+
+#halaman kembali https://tokoanda.com/selesai?invoice_id=3382463b-5c1e-4a8f-9d2b-7e0a1f6c9b11&order_id=INV-1001&signature=5a29…57c&status=paid&total=25123
+
+#contoh verifikasi app.get('/selesai', (req, res) => { const { order_id = '', status = '', total = '', invoice_id = '', signature = '' } = req.query; const expected = crypto.createHmac('sha256', process.env.QIOSPAY_PRIVATE_KEY) .update([order_id, status, total, invoice_id].join('|')).digest('hex'); const ok = signature.length === expected.length && crypto.timingSafeEqual(Buffer.from(signature), Buffer.from(expected)); if (!ok) return res.status(400).send('Signature tidak valid'); res.render(status === 'paid' ? 'sukses' : 'gagal', { orderId: order_id }); });
+
+#contoh body callback { "event": "invoice.paid", "sent_at": "2026-10-17T20:52:10+07:00", "data": { "id": "3382463b-5c1e-4a8f-9d2b-7e0a1f6c9b11", "ref_id": "INV-1001", "status": "paid", "amount": 150000, "unique_code": 123, "total_amount": 150123, "mdr": 0, "net_amount": 150000, "paid_at": "2026-10-17T20:52:08+07:00", "paid_by": "BUDI SANTOSO", "merchant_code": "716554639659", "merchant_name": "Toko Anda", "metadata": {"user_id": 42}, "pay_url": "https://my.qiospay.com/pay/3382463b-…" } }
+
+#contoh kode verifikasi callback import express from 'express'; import crypto from 'node:crypto';
+
+const app = express();
+
+// PENTING: pakai body mentah, bukan express.json(), agar signature cocok. app.post('/webhook/qiospay', express.raw({ type: 'application/json' }), async (req, res) => { const raw = req.body.toString('utf8'); const sig = Object.fromEntries(String(req.get('X-QiosPay-Signature') || '') .split(',').map((p) => p.split('='))); const expected = crypto.createHmac('sha256', process.env.QIOSPAY_PRIVATE_KEY) .update(${sig.t}.${raw}).digest('hex');
+
+const valid = sig.v1 && sig.v1.length === expected.length && crypto.timingSafeEqual(Buffer.from(sig.v1), Buffer.from(expected)); if (!valid || Math.abs(Date.now() / 1000 - Number(sig.t)) > 600) return res.sendStatus(401);
+
+const { event, data } = JSON.parse(raw); if (event === 'invoice.paid') { await markOrderPaid(data.ref_id, data); // idempoten: abaikan bila sudah lunas } res.sendStatus(200); });
+
+#lapor eror await fetch('https://my.qiospay.com/v1/errors', { method: 'POST', headers: { 'x-api-key': process.env.QIOSPAY_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ kind: 'paid_unconfirmed', message: 'Lunas di QiosPay, status pesanan masih menunggu', ref_id: 'INV-1001', severity: 'critical' }), });
+
+#contoh respon { "data": { "ok": true } }
+
+#contoh request info merchant const res = await fetch('https://my.qiospay.com/v1/me', { headers: { 'x-api-key': process.env.QIOSPAY_API_KEY }, }); console.log(await res.json());
+
+#respon { "data": { "merchant": { "business_name": "Locked Profile" }, "key": { "label": "Utama", "mode": "live" }, "store": { "code": "716554639659", "name": "IJTZ VPN", "website": "https://tokoanda.com", "callback_url": "https://tokoanda.com/webhook/qiospay", "return_url": "https://tokoanda.com/selesai" } } }
+
+#contoh request daftar pemcairan curl "https://my.qiospay.com/v1/withdrawals?status=success"
+-H "x-api-key: API_KEY_ANDA"
+
+#respon { "data": [ { "code": "WD20261017-0012", "gross": 1520000, "fee": 2500, "net": 1517500, "bank_name": "BCA", "bank_account_no": "12345•••", "status": "success", "transfer_ref": "TRF-889120", "processed_at": "2026-10-17T15:02:11+07:00", "created_at": "2026-10-17T14:00:00+07:00" } ] }
+
+#snap pop up html
+
+<!-- Tombol bayar: pay_url dari respons Create Transaction -->
+<button data-qiospay="PAY_URL_DARI_API" data-redirect="https://tokoanda.com/selesai" class="btn btn-primary"> Bayar Sekarang </button>
+
+<!-- Library Snap QiosPay (taruh sebelum </body>) --> <script src="https://my.qiospay.com/snap.js"></script>
+#snap pop up javascript // Atau kendalikan sendiri lewat JavaScript document.querySelector('#bayar').addEventListener('click', () => { QiosPay.pay('PAY_URL_DARI_API', { onPaid(d) { console.log('Lunas', d.ref_id, d.total_amount); window.location.href = '/pesanan/' + d.ref_id; }, onClose(reason) { // pembeli menutup popup sebelum membayar }, }); });
